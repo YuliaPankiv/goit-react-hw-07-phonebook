@@ -1,16 +1,20 @@
+import { Container } from './App.styled';
+import { ContactForm } from './ContactForm/ContactForm';
+import { ContactList } from './ContactList/ContactList';
+import { Filter } from './Filter/Filter';
+
+// localStorage.setItem('contacts', ['number']);
 export const App = () => {
+  // const preloadedState = {
+  //   contacts: JSON.parse(localStorage.getItem('contacts')) || [],
+  // };
+  // console.log(preloadedState);
+
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
+    <Container>
+      <ContactForm />
+      <Filter />
+      <ContactList />
+    </Container>
   );
 };
