@@ -6,6 +6,7 @@ const preloadedState = [
   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
 ];
 
+
 const contactSlice = createSlice({
   name: 'contacts',
   initialState: {
