@@ -14,7 +14,6 @@ export const ContactList = () => {
     return contactName.includes(filter);
   });
 
-  console.log(visualContacts);
   return (
     <List>
       {visualContacts.map(contact => (

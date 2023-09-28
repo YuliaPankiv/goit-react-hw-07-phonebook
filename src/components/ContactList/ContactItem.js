@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { Delete } from './ContactList.styled';
-import { removeContact } from 'redux/ContactSlice';
+import { removeContact } from 'redux/contactOperations';
 
 export const ContactItem = ({ name, id, number }) => {
   const dispatch = useDispatch();

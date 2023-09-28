@@ -2,26 +2,29 @@ import { nanoid } from '@reduxjs/toolkit';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Label } from './ContactForm.styled';
-import { add } from 'redux/ContactSlice';
+import { addContactSuccess } from 'redux/ContactSlice';
+import { addContactApi } from 'servises/firebaseApi';
+import { addContact } from 'redux/contactOperations';
 
 export const ContactForm = () => {
   const [form, setForm] = useState({ name: '', number: '' });
   const dispatch = useDispatch();
-  const cont = useSelector(state => state.contactsList.contacts);
-  console.log(cont);
+  const contacts = useSelector(state => state.contactsList.contacts);
+  const isLoading = useSelector(state => state.contactsList.isLoading);
   const handleChange = e => {
     const { name, value } = e.target;
     setForm(prevForm => {
       return { ...prevForm, [name]: value };
     });
   };
-  console.log(form.name);
   const handleSubmit = e => {
     e.preventDefault();
-    cont.find(contact => contact.name === form.name)
-      ? alert(`${form.name} is already in contacts list`)
-      : dispatch(add({ ...form, id: nanoid() }));
-
+    const newCon = { ...form, id: nanoid() };
+    const isAwailable = contacts.find(contact => contact.name === form.name);
+    if (isAwailable) {
+      return alert(`${form.name} is already in contacts list`);
+    }
+    dispatch(addContact(newCon));
     setForm({ name: '', number: '' });
   };
   return (
@@ -54,7 +57,7 @@ export const ContactForm = () => {
           }}
         />
       </Label>
-      <Button type="submit">Add contact</Button>
+      <Button type="submit">{isLoading ? 'Loading...' : 'Add contact'}</Button>
     </Form>
   );
 };

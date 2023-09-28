@@ -1,14 +1,20 @@
+import { useEffect } from 'react';
 import { Container } from './App.styled';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts } from 'redux/contactOperations';
 
-// localStorage.setItem('contacts', ['number']);
 export const App = () => {
-  // const preloadedState = {
-  //   contacts: JSON.parse(localStorage.getItem('contacts')) || [],
-  // };
-  // console.log(preloadedState);
+  const dispatch = useDispatch();
+  const isContactExist = useSelector(state =>
+    Boolean(state.contactsList.contacts.length)
+  );
+
+  useEffect(() => {
+    !isContactExist && dispatch(getContacts());
+  }, [dispatch, isContactExist]);
 
   return (
     <Container>

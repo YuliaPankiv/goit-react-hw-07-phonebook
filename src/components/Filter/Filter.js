@@ -4,9 +4,7 @@ import { filterContact } from 'redux/ContactSlice';
 
 export const Filter = () => {
   const dispatch = useDispatch();
-  // const value = useSelector(state => state.contactList.filter);
   const filter = useSelector(state => state.contactsList.filter);
-  console.log(filter);
   return (
     <>
       <Label>
