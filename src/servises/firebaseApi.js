@@ -1,22 +1,13 @@
 import axios from 'axios';
 
 //enf
-axios.defaults.baseURL =
-  'https://contactbook-3c9ee-default-rtdb.firebaseio.com';
+const contactsAPI = axios.create({
+  baseURL: 'https://651beec1194f77f2a5af1a88.mockapi.io/contacts/',
+});
 
-export const addContactApi = contact => {
-  return axios.post('/contact.json', contact).then(({ data }) => {
-    return { ...contact, id: data.name };
-  });
-};
-
-export const getContactApi = () => {
-  return axios
-    .get('/contact.json')
-    .then(({ data }) =>
-      Object.entries(data).map(([id, contact]) => ({ ...contact, id }))
-    );
-};
-export const removeContactApi = id => {
-  return axios.delete(`/contact/${id}.json`).then(() => id);
-};
+export const getContactsApi = async () =>
+  (await contactsAPI.get('/contacts')).data;
+export const removeContactApi = async id =>
+  (await contactsAPI.delete(`/contacts/${id}`)).data;
+export const addContactApi = async contact =>
+  (await contactsAPI.post('/contacts', contact)).data;

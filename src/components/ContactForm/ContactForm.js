@@ -2,15 +2,14 @@ import { nanoid } from '@reduxjs/toolkit';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Label } from './ContactForm.styled';
-import { addContactSuccess } from 'redux/ContactSlice';
-import { addContactApi } from 'servises/firebaseApi';
-import { addContact } from 'redux/contactOperations';
+import { selectContacts, selectIsLoading } from 'redux/selectors';
+import { addContact } from 'redux/operation';
 
 export const ContactForm = () => {
-  const [form, setForm] = useState({ name: '', number: '' });
+  const [form, setForm] = useState({ name: '', phone: '' });
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contactsList.contacts);
-  const isLoading = useSelector(state => state.contactsList.isLoading);
+  const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectIsLoading);
   const handleChange = e => {
     const { name, value } = e.target;
     setForm(prevForm => {
@@ -19,13 +18,13 @@ export const ContactForm = () => {
   };
   const handleSubmit = e => {
     e.preventDefault();
-    const newCon = { ...form, id: nanoid() };
+    const newContact = { ...form, id: nanoid() };
     const isAwailable = contacts.find(contact => contact.name === form.name);
     if (isAwailable) {
       return alert(`${form.name} is already in contacts list`);
     }
-    dispatch(addContact(newCon));
-    setForm({ name: '', number: '' });
+    dispatch(addContact(newContact));
+    setForm({ name: '', phone: '' });
   };
   return (
     <Form onSubmit={handleSubmit}>
@@ -47,8 +46,8 @@ export const ContactForm = () => {
         Tel
         <input
           type="tel"
-          name="number"
-          value={form.number}
+          name="phone"
+          value={form.phone}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required

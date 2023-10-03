@@ -1,15 +1,15 @@
 import { useDispatch } from 'react-redux';
 import { Delete } from './ContactList.styled';
-import { removeContact } from 'redux/contactOperations';
+import { deleteContact } from 'redux/operation';
 
-export const ContactItem = ({ name, id, number }) => {
+export const ContactItem = ({ name, id, phone }) => {
   const dispatch = useDispatch();
   return (
     <>
       <p>
-        {name}: {number}
+        {name}: {phone}
       </p>
-      <Delete type="button" onClick={() => dispatch(removeContact(id))}>
+      <Delete type="button" onClick={() => dispatch(deleteContact(id))}>
         Delete
       </Delete>
     </>

@@ -1,10 +1,11 @@
 import { Label } from './Filter.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { filterContact } from 'redux/ContactSlice';
+import { filterContacts } from 'redux/ContactSlice';
+import { selectFilter } from 'redux/selectors';
 
 export const Filter = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(state => state.contactsList.filter);
+  const filter = useSelector(selectFilter);
   return (
     <>
       <Label>
@@ -15,7 +16,7 @@ export const Filter = () => {
           value={filter}
           required
           onChange={e => {
-            dispatch(filterContact(e.target.value));
+            dispatch(filterContacts(e.target.value));
           }}
         />
       </Label>
