@@ -3,7 +3,7 @@ import {
   addContactApi,
   getContactsApi,
   removeContactApi,
-} from 'servises/firebaseApi';
+} from 'servises/api';
 
 export const addContact = createAsyncThunk(
   'contacts/addContact',
